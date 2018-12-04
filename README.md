@@ -20,7 +20,7 @@ Retrieving satellite data for a specific location from the raw dataset is clumsy
    
 *  **address** 
 
-    For a given address, returns the paths of the blue, red and green of the three most recent images.
+    For a given address, returns the paths of the blue, red and green of the three most recent images. 
     Required:
     `address=string`
 
