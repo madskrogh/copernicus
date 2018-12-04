@@ -21,7 +21,6 @@ func init() {
 	http.HandleFunc("/address", addressHandler)
 }
 
-//2.1
 //For a given set of coordinates, returns the paths of
 //the blue, red and green of the three most recent images.
 func coordinatesHandler(w http.ResponseWriter, req *http.Request) {
@@ -30,12 +29,12 @@ func coordinatesHandler(w http.ResponseWriter, req *http.Request) {
 		Lon float64
 		Lat float64
 	}
-	lon, err := strconv.ParseFloat(req.FormValue("Lon"), 64)
+	lon, err := strconv.ParseFloat(req.FormValue("lon"), 64)
 	if err != nil {
 		http.Error(w, "Bad JSON", http.StatusBadRequest)
 		return
 	}
-	lat, err := strconv.ParseFloat(req.FormValue("Lat"), 64)
+	lat, err := strconv.ParseFloat(req.FormValue("lat"), 64)
 	if err != nil {
 		http.Error(w, "Bad JSON", http.StatusBadRequest)
 		return
@@ -57,7 +56,6 @@ func coordinatesHandler(w http.ResponseWriter, req *http.Request) {
 	e.Encode(imagePaths)
 }
 
-//3.1
 //For a given adress, returns the paths of the
 //blue, red and green of the three most recent images.
 func addressHandler(w http.ResponseWriter, req *http.Request) {
@@ -65,7 +63,7 @@ func addressHandler(w http.ResponseWriter, req *http.Request) {
 	type RequestVals struct {
 		Address string
 	}
-	reqvals := RequestVals{req.FormValue("Address")}
+	reqvals := RequestVals{req.FormValue("address")}
 	ctx := appengine.NewContext(req)
 	results, err := services.GetAddress(reqvals.Address, &ctx)
 	if err != nil {
@@ -82,7 +80,6 @@ func addressHandler(w http.ResponseWriter, req *http.Request) {
 	e.Encode(imagePaths)
 }
 
-//3.2a
 //For a given location, returns the paths to the blue
 //bands of the three most recent images, ranked in
 //increasing order by the distance to a colour value of 255.
@@ -91,7 +88,7 @@ func blueColourDistanceHandler(w http.ResponseWriter, req *http.Request) {
 	type RequestVals struct {
 		Address string
 	}
-	reqvals := RequestVals{req.FormValue("Address")}
+	reqvals := RequestVals{req.FormValue("address")}
 	ctx := appengine.NewContext(req)
 	results, err := services.GetAddress(reqvals.Address, &ctx)
 	if err != nil {
@@ -159,7 +156,6 @@ func blueColourDistanceHandler(w http.ResponseWriter, req *http.Request) {
 	e.Encode(ranked)
 }
 
-//3.2b
 //rgbColourDistanceHandler returns, for a given location,
 //the paths to the three most recent images, ranked in
 //increasing order by the distance to a given target hex
@@ -170,7 +166,7 @@ func rgbColourDistanceHandler(w http.ResponseWriter, req *http.Request) {
 		Address string
 		Color   string
 	}
-	reqvals := RequestVals{req.FormValue("Address"), req.FormValue("Color")}
+	reqvals := RequestVals{req.FormValue("address"), req.FormValue("color")}
 
 	if reqvals.Address == "" || reqvals.Color == "" {
 		http.Error(w, "Bad JSON", http.StatusBadRequest)
@@ -283,7 +279,6 @@ func rgbColourDistanceHandler(w http.ResponseWriter, req *http.Request) {
 	e.Encode(ranked)
 }
 
-//4.1
 //For two given sets of coordinates, returns the paths of
 //the blue, red and green of the three most recent images.
 func moreCoordinatesHandler(w http.ResponseWriter, req *http.Request) {
@@ -294,22 +289,22 @@ func moreCoordinatesHandler(w http.ResponseWriter, req *http.Request) {
 		NorthLat float64
 		SouthLat float64
 	}
-	westlon, err := strconv.ParseFloat(req.FormValue("WestLon"), 64)
+	westlon, err := strconv.ParseFloat(req.FormValue("westlon"), 64)
 	if err != nil {
 		http.Error(w, "Bad JSON", http.StatusBadRequest)
 		return
 	}
-	eastlon, err := strconv.ParseFloat(req.FormValue("EastLon"), 64)
+	eastlon, err := strconv.ParseFloat(req.FormValue("eastlon"), 64)
 	if err != nil {
 		http.Error(w, "Bad JSON", http.StatusBadRequest)
 		return
 	}
-	northlat, err := strconv.ParseFloat(req.FormValue("NorthLat"), 64)
+	northlat, err := strconv.ParseFloat(req.FormValue("northlat"), 64)
 	if err != nil {
 		http.Error(w, "Bad JSON", http.StatusBadRequest)
 		return
 	}
-	southlat, err := strconv.ParseFloat(req.FormValue("SouthLat"), 64)
+	southlat, err := strconv.ParseFloat(req.FormValue("southlat"), 64)
 	if err != nil {
 		http.Error(w, "Bad JSON", http.StatusBadRequest)
 		return
